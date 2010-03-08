@@ -7,9 +7,10 @@ use LWP::UserAgent;
 use URI::Escape;
 use HTML::Entities;
 use Encode;
+use utf8;
 
 
-our $VERSION = '0.14';
+our $VERSION = '0.15';
 
 
 my %lang_pairs = (
@@ -48,10 +49,11 @@ my %lang_pairs = (
                     'en-gl'          => 'English -> Galician',
                     'gl-en'          => 'Galician -> English',
                     'br-fr'          => 'Breton -> French',
-                    'nb-nn'          => 'Norwegian Bokmål -> Norwegian Nynorsk',
-                    'nn-nb'          => 'Norwegian Nynorsk -> Norwegian Bokmål',
+                    'nb-nn'          => 'Norwegian BokmÃ¥l -> Norwegian Nynorsk',
+                    'nn-nb'          => 'Norwegian Nynorsk -> Norwegian BokmÃ¥l',
                     'sv-da'          => 'Swedish-Danish',
                     'es-ast'         => 'Spanish-Asturian',
+                    'is-en'          => 'Icelandic-English',
                  );
 
 my %output =     (
@@ -208,7 +210,7 @@ sub get_unknown {
     
     if (@_ && $self->{store_unknown}) {
         my $lang_code = shift;
-        if ($lang_code =~ /^(?:br|ca|cy|en|eo|es|eu|fr|gl|nb|nn|oc|oc_aran|pt|ro|sv)$/) {
+        if ($lang_code =~ /^(?:br|ca|cy|en|eo|es|eu|fr|gl|is|nb|nn|oc|oc_aran|pt|ro|sv)$/) {
             return $self->{unknown}->{$lang_code};
         } else {
             carp "Invalid language code\n";
@@ -256,6 +258,7 @@ sub _fix_translated {
 
 __END__
 
+=encoding utf8
 
 =head1 NAME
 
@@ -264,7 +267,7 @@ WWW::Translate::Apertium - Open source machine translation
 
 =head1 VERSION
 
-Version 0.14 February 13, 2010
+Version 0.15 March 8, 2010
 
 
 =head1 SYNOPSIS
@@ -347,7 +350,7 @@ Currently, Apertium supports the following language pairs:
 
 =item * Galician < > Spanish
 
-=item * Norwegian Bokmål < > Norwegian Nynorsk
+=item * Norwegian BokmÃ¥l < > Norwegian Nynorsk
 
 =item * Occitan < > Spanish
 
@@ -366,6 +369,8 @@ Currently, Apertium supports the following language pairs:
 =item * Breton    >   French
 
 =item * Catalan   >   Esperanto
+
+=item * Icelandic >   English
 
 =item * Romanian  >   Spanish
 
@@ -485,7 +490,15 @@ B<Galician> into:
 
 =back
 
-B<Norwegian Bokmål> into:
+B<Icelandic> into:
+
+=over 8
+
+=item * B<English> -- C<< is-en >>
+
+=back
+
+B<Norwegian BokmÃ¥l> into:
 
 =over 8
 
@@ -497,7 +510,7 @@ B<Norwegian Nynorsk> into:
 
 =over 8
 
-=item * B<Norwegian Bokmål> -- C<< nn-nb >>
+=item * B<Norwegian BokmÃ¥l> -- C<< nn-nb >>
 
 =back
 
@@ -684,7 +697,9 @@ The valid values of $lang_code for the source language are (in alphabetical orde
 
 =item * C<< gl >>  --  Galician
 
-=item * C<< nb >>  --  Norwegian Bokmål
+=item * C<< is >>  --  Icelandic
+
+=item * C<< nb >>  --  Norwegian BokmÃ¥l
 
 =item * C<< nn >>  --  Norwegian Nynorsk
 
@@ -729,7 +744,7 @@ L<http://wiki.apertium.org/wiki/Installation>
 Many thanks to Mikel Forcada Zubizarreta, coordinator of the Transducens
 research team of the Department of Software and Computing Systems at the
 University of Alicante, who kindly answered my questions during the development
-of this module, and to Xavier Noria, João Albuquerque, and Kevin Brubeck Unhammer
+of this module, and to Xavier Noria, JoÃ£o Albuquerque, and Kevin Brubeck Unhammer
 for useful suggestions.
 The author is also grateful to Francis Tyers, a member of the Apertium team
 who provided essential feedback for the latest versions of this module.

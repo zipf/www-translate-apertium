@@ -1,5 +1,11 @@
 Revision history for Perl extension WWW::Translate::Apertium
 
+0.15  March 8, 2010
+
+    * Added the new Icelandic -> English pair.
+    * Changed the file encoding of the .pm file to UTF-8.
+    
+
 0.14  February 13, 2010
 
     * The web service whitelist restriction no longer applies to this module.

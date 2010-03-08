@@ -56,11 +56,11 @@ DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
 NAME = WWW::Translate::Apertium
 NAME_SYM = WWW_Translate_Apertium
-VERSION = 0.14
+VERSION = 0.15
 VERSION_MACRO = VERSION
-VERSION_SYM = 0_14
+VERSION_SYM = 0_15
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 0.14
+XS_VERSION = 0.15
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib/arch
@@ -183,6 +183,7 @@ PERL_ARCHIVE_AFTER =
 
 
 TO_INST_PM = lib/WWW/Translate/Apertium.pm \
+	lib/WWW/Translate/doc.htm \
 	lib/WWW/Translate/doc.html \
 	lib/WWW/Translate/pod2htmd.tmp \
 	lib/WWW/Translate/pod2htmi.tmp
@@ -193,6 +194,8 @@ PM_TO_BLIB = lib/WWW/Translate/pod2htmd.tmp \
 	blib/lib/WWW/Translate/pod2htmi.tmp \
 	lib/WWW/Translate/doc.html \
 	blib/lib/WWW/Translate/doc.html \
+	lib/WWW/Translate/doc.htm \
+	blib/lib/WWW/Translate/doc.htm \
 	lib/WWW/Translate/Apertium.pm \
 	blib/lib/WWW/Translate/Apertium.pm
 
@@ -263,7 +266,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
 DISTNAME = WWW-Translate-Apertium
-DISTVNAME = WWW-Translate-Apertium-0.14
+DISTVNAME = WWW-Translate-Apertium-0.15
 
 
 # --- MakeMaker macro section:
@@ -484,7 +487,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
 	$(NOECHO) $(ECHO) '--- #YAML:1.0' > META_new.yml
 	$(NOECHO) $(ECHO) 'name:               WWW-Translate-Apertium' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version:            0.14' >> META_new.yml
+	$(NOECHO) $(ECHO) 'version:            0.15' >> META_new.yml
 	$(NOECHO) $(ECHO) 'abstract:           Open source machine translation' >> META_new.yml
 	$(NOECHO) $(ECHO) 'author:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    - Enrique Nell <perl_nell@telefonica.net>' >> META_new.yml
@@ -796,7 +799,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.14">' > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.15">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT>Open source machine translation</ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Enrique Nell &lt;perl_nell@telefonica.net&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
@@ -816,6 +819,7 @@ pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	  lib/WWW/Translate/pod2htmd.tmp blib/lib/WWW/Translate/pod2htmd.tmp \
 	  lib/WWW/Translate/pod2htmi.tmp blib/lib/WWW/Translate/pod2htmi.tmp \
 	  lib/WWW/Translate/doc.html blib/lib/WWW/Translate/doc.html \
+	  lib/WWW/Translate/doc.htm blib/lib/WWW/Translate/doc.htm \
 	  lib/WWW/Translate/Apertium.pm blib/lib/WWW/Translate/Apertium.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
