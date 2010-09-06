@@ -10,7 +10,7 @@ use Encode;
 use utf8;
 
 
-our $VERSION = '0.15';
+our $VERSION = '0.16';
 
 
 my %lang_pairs = (
@@ -54,6 +54,8 @@ my %lang_pairs = (
                     'sv-da'          => 'Swedish-Danish',
                     'es-ast'         => 'Spanish-Asturian',
                     'is-en'          => 'Icelandic-English',
+                    'bg-mk'          => 'Bulgarian-Macedonian',
+                    'mk-bg'          => 'Macedonian-Bulgarian',
                  );
 
 my %output =     (
@@ -79,12 +81,12 @@ sub new {
         
         # check value; warn and delete if illegal
         if ($_ eq 'output' && !exists $output{$overrides{output}}) {
-            carp _message($_, $overrides{$_});
-            delete $overrides{$_};
+            carp _message('output', $overrides{output});
+            delete $overrides{output};
         }
         if ($_ eq 'lang_pair' && !exists $lang_pairs{$overrides{lang_pair}}) {
-            carp _message($_, $overrides{$_});
-            delete $overrides{$_};
+            carp _message('lang_pair', $overrides{lang_pair});
+            delete $overrides{lang_pair};
         }
     }
     
@@ -124,7 +126,7 @@ sub translate {
     return '' if ($string eq '');
     
     $string = _fix_source($string);
-    $string = uri_escape($string);
+    $string = uri_escape_utf8($string);
 
     my $browser = $self->{agent};
     
@@ -184,10 +186,10 @@ sub from_into {
     if (@_) {
         my $pair = shift;
         if (!exists $lang_pairs{$pair}) {
-            carp _message('lang_pair', $self->{lang_pair});
+            carp _message('lang_pair', $pair);
             $self->{lang_pair} = $defaults{'lang_pair'};
         } else {
-            $self->{lang_pair} = $pair if exists $lang_pairs{$pair};
+            $self->{lang_pair} = $pair;
         }
     } else {
         return $self->{lang_pair};
@@ -210,7 +212,7 @@ sub get_unknown {
     
     if (@_ && $self->{store_unknown}) {
         my $lang_code = shift;
-        if ($lang_code =~ /^(?:br|ca|cy|en|eo|es|eu|fr|gl|is|nb|nn|oc|oc_aran|pt|ro|sv)$/) {
+        if ($lang_code =~ /^(?:br|ca|cy|en|eo|es|eu|fr|gl|is|nb|nn|oc|oc_aran|pt|ro|sv|bg|mk)$/) {
             return $self->{unknown}->{$lang_code};
         } else {
             carp "Invalid language code\n";
@@ -267,7 +269,7 @@ WWW::Translate::Apertium - Open source machine translation
 
 =head1 VERSION
 
-Version 0.15 March 8, 2010
+Version 0.16 September 6, 2010
 
 
 =head1 SYNOPSIS
@@ -317,8 +319,6 @@ WWW::Translate::Apertium provides an object oriented interface to the Apertium
 online machine translation web service, based on Apertium 3.0.
 
 
-B<NOTE>: The whitelist-based access restriction no longer applies to this module.
-
 
 Currently, Apertium supports the following language pairs:
 
@@ -327,6 +327,8 @@ Currently, Apertium supports the following language pairs:
 =over 4
 
 =item * Aranese < > Catalan
+
+=item * Bulgarian < > Macedonian
 
 =item * Catalan < > English
 
@@ -430,6 +432,14 @@ B<Breton> into:
 
 =back
 
+B<Bulgarian> into:
+
+=over 8
+
+=item * B<Macedonian> --C<< bg-mk >>
+
+=back
+
 B<Catalan> into:
 
 =over 8
@@ -495,6 +505,14 @@ B<Icelandic> into:
 =over 8
 
 =item * B<English> -- C<< is-en >>
+
+=back
+
+B<Macedonian> into:
+
+=over 8
+
+=item * B<Bulgarian> --C<< mk-bg >>
 
 =back
 
@@ -679,6 +697,8 @@ The valid values of $lang_code for the source language are (in alphabetical orde
 
 =over 8
 
+=item * C<< bg >>  --  Bulgarian
+
 =item * C<< br >>  --  Breton
 
 =item * C<< ca >>  --  Catalan
@@ -698,6 +718,8 @@ The valid values of $lang_code for the source language are (in alphabetical orde
 =item * C<< gl >>  --  Galician
 
 =item * C<< is >>  --  Icelandic
+
+=item * C<< mk >>  --  Macedonian
 
 =item * C<< nb >>  --  Norwegian Bokmål
 

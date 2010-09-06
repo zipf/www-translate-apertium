@@ -1,5 +1,11 @@
 Revision history for Perl extension WWW::Translate::Apertium
 
+0.16  September 6, 2010
+
+    * Added support for the new Macedonian < > Bulgarian bidirectional pair.
+    * Replaced uri_scape with uri_scape_utf8.
+    * Fixed a bug related to the "invalid value for parameter" message.
+
 0.15  March 8, 2010
 
     * Added the new Icelandic -> English pair.
